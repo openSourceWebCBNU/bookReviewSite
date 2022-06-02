@@ -14,9 +14,8 @@
 </head>
 <body>
     <div class="menu">
-        <ul class="menu-bar">
+        <ul class="main-menu-bar">
             <li class="active"><a href="main.jsp">MAIN</a></li>
-            <li><a href="mypage.jsp">My Page</a></li>
         </ul>
         <ul class="login_register">
             <li class="dropdown">

@@ -10,9 +10,8 @@
 </head>
 <body>
     <div class="menu">
-        <ul class="menu-bar">
+        <ul class="main-menu-bar">
             <li class="active"><a href="main.jsp">MAIN</a></li>
-            <li><a href="mypage.jsp">My Page</a></li>
         </ul>
         <ul class="login_register">
             <li class="dropdown">
@@ -38,7 +37,7 @@
                 <input type="text" class="form-control" placeholder="이름" name="user_name" maxlength="20">
             </div>
             <div class="form-group">
-                <input type="email" class="form-control" placeholder="E-Mail" name="user_email" maxlength="20">
+                <input type="email" class="form-control" placeholder="E-Mail" name="user_email" maxlength="40">
             </div>
             <input type="submit" class="btn-join" value="회원가입">
         </form>

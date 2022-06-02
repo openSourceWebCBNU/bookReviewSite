@@ -18,7 +18,6 @@
 <div class="menu">
     <ul class="menu-bar">
         <li class="active"><a href="main.jsp">MAIN</a></li>
-        <li><a href="mypage.jsp">My Page</a></li>
     </ul>
     <%
         if(user_id == null) {
@@ -39,6 +38,7 @@
     <ul class="logout">
         <li class="dropdown">
             <ul class="dropdown-manu">
+                <li><a href="mypage.jsp">My Page</a></li>
                 <li><a href="logoutAction.jsp">로그아웃</a></li>
             </ul>
         </li>
