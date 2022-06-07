@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://d3js.org/d3.v5.js"></script>
+    <script>
+        var playInit = true;
+        function init(nowAddedDeg, selectedDeg) {
+            var rect_lst = [];
+            var width = 200;
+            var height = 100;
+            var rectNum = 11;
+            for(var i =0; i<(rectNum*2)+1 ; i++){
+                rect_lst.push({});
+            }
+            for (var deg = nowAddedDeg; deg <= 220+nowAddedDeg; deg += 10) {
+                var realDeg = deg;
+                var dummyDeg;
+                var diff;
+                var layer;
+
+                if(deg>200){
+                    realDeg+=130
+                }
+
+                if(realDeg > 200)
+                    dummyDeg = realDeg-360;
+                else
+                    dummyDeg = realDeg;
+
+                if(dummyDeg>selectedDeg ){
+                    diff = Math.ceil((dummyDeg-selectedDeg)/10);
+                    layer = (rectNum-diff)*2+1;
+                }
+                else{
+                    diff = Math.floor((selectedDeg-dummyDeg)/10);
+                    layer = (rectNum-diff)*2;
+                }
+                
+                rect_lst.splice(layer, 1, {
+                    "transform": "rotate(" + realDeg + ")",
+                    "stroke": ((deg-nowAddedDeg) === selectedDeg) ? 'red' : 'blue',
+                    "layer" : layer
+                })
+            }
+            d3.select("svg").selectAll("*").remove();
+            var xPosition = (parseInt(d3.select("svg").style("width")) / 2)-300;
+            var yPosition = ((parseInt(d3.select("svg").style("height"))/2)-(height/2));
+            d3.select("svg").selectAll("rect").data(rect_lst).enter().append("g")
+                .attr("transform", function (d) { return d.transform })
+                .attr("transform-origin", "center center")
+                .append("rect")
+                    .attr("x", xPosition)
+                    .attr("y", yPosition)
+                    .attr("width", width)
+                    .attr("height", height)
+                    .attr("visibility", function(d){ return d['visibility']})
+                    .attr("fill", "white")
+                    .attr("stroke", function (d) { return d['stroke'] })
+                    .attr("stroke-width", "1")
+                    .text(function(d){return d.layer})
+                    .on("mouseover", function(){
+                        console.log("rectMouseOver");
+                        init(nowAddedDeg, 10);})
+                
+            d3.selectAll("g").append("text")
+                .attr("x", xPosition)
+                .attr("y", yPosition+50)
+                .attr("fill", "green")
+                .attr("font-size", "15")
+                .attr("font-family", "cursive")
+                .attr("transform", "rotate(-90)")
+                .attr("transform-origin", "center")
+                .attr("style", "transform-box : fill-box")
+                .text(function(d, i){ return "heyjude";});
+        }
+        var nowAddedDeg = 0;
+        var selectedDeg = 90;
+        function button(){
+            var interval;
+            d3.select("button").on("mouseover", function(){interval = setInterval(function(){
+                nowAddedDeg+=1;
+                if(nowAddedDeg >= 200)
+                    nowAddedDeg-=230;
+                init(nowAddedDeg, selectedDeg);
+            }, 30)})
+            d3.select("button").on("mouseout", function(){clearInterval(interval)});
+        }
+        window.onload = function(){
+            init(0, selectedDeg);
+            button();
+        };
+        window.onresize = function(){
+            init(nowAddedDeg, selectedDeg);
+        }
+    </script>
+    <style>
+    </style>
+</head>
+
+<body>
+    <div>
+        <svg width="100vw" height="80vh" style="border:1px solid black">
+        </svg>
+        <button>버튼</button>
+    <div>
+<body>
