@@ -8,47 +8,73 @@
     <title>Document</title>
     <script src="https://d3js.org/d3.v5.js"></script>
     <script>
-        var playInit = true;
-        function init(nowAddedDeg, selectedDeg) {
-            var rect_lst = [];
-            var width = 200;
-            var height = 100;
-            var rectNum = 11;
-            for(var i =0; i<(rectNum*2)+1 ; i++){
+        var initFirst = true;
+        var rect_lst = [];
+        var width = 200;
+        var height = 100;
+        
+        var rectNum = 23;
+        var degPlus = 10;
+
+        var nowAddedDeg = 0;
+        var selectedDeg = 90;
+        for(var i =0; i<rectNum ; i++){
                 rect_lst.push({});
             }
-            for (var deg = nowAddedDeg; deg <= 220+nowAddedDeg; deg += 10) {
+        function init(nowAddedDeg, selectedDeg) {
+            if(selectedDeg > 200)
+                selectedDeg -= 360;
+            var layerLeftNum;
+            var layerRightNum;
+            layerLeftNum = Math.ceil(selectedDeg/degPlus)+2
+            layerRightNum = rectNum-layerLeftNum-1;
+            
+            for (var deg = nowAddedDeg; deg <= 180+(degPlus*4)+nowAddedDeg; deg += degPlus) {
                 var realDeg = deg;
                 var dummyDeg;
                 var diff;
                 var layer;
-
-                if(deg>200){
-                    realDeg+=130
+                
+                if(realDeg>180+(degPlus*2)){
+                    realDeg+=130;
                 }
-
-                if(realDeg > 200)
+                
+                if(realDeg > 180+(degPlus*2))
                     dummyDeg = realDeg-360;
                 else
                     dummyDeg = realDeg;
 
                 if(dummyDeg>selectedDeg ){
-                    diff = Math.ceil((dummyDeg-selectedDeg)/10);
-                    layer = (rectNum-diff)*2+1;
+                    diff = Math.ceil(Math.abs((dummyDeg-selectedDeg)/degPlus));
+                    if(diff <= layerLeftNum) //이쪽은 우익, 즉 우익의 개수가 왼쪽의 lectNum보다 많아졌을 때(예를 들어 왼쪽이 두개고 오른쪽이 10개면 오른쪽 3개째부터) 
+                        layer = (rectNum-1)-(diff*2)+1;
+                    else{
+                        layer = (rectNum-1)-(layerLeftNum*2)-(diff-layerLeftNum); 
+                    }
                 }
                 else{
-                    diff = Math.floor((selectedDeg-dummyDeg)/10);
-                    layer = (rectNum-diff)*2;
+                    diff = Math.floor(Math.abs((selectedDeg-dummyDeg)/degPlus));
+                    if(diff <= layerRightNum)
+                        layer = (rectNum-1)-(diff*2);
+                    else{
+                        layer = (rectNum-1)- //layer 최대값에서
+                        (layerRightNum*2)-  //*2를 해서 갔던 레이어 만큼을 제하고
+                        (diff-layerRightNum); //거기부터 1씩(layerRight와 diff의 임만만큼) 줄인다
+                    }
                 }
-                
                 rect_lst.splice(layer, 1, {
                     "transform": "rotate(" + realDeg + ")",
-                    "stroke": ((deg-nowAddedDeg) === selectedDeg) ? 'red' : 'blue',
-                    "layer" : layer
+                    "stroke": ((deg-nowAddedDeg) === 0) ? 'red' : 'blue',
+                    "layer" : layer,
+                    "deg" : deg,
+                    "realDeg" : realDeg,
+                    "dummyDeg" : dummyDeg
                 })
+                
             }
+            console.log(rect_lst);
             d3.select("svg").selectAll("*").remove();
-            var xPosition = (parseInt(d3.select("svg").style("width")) / 2)-300;
+            var xPosition = (parseInt(d3.select("svg").style("width")) / 2)-(width*2);
             var yPosition = ((parseInt(d3.select("svg").style("height"))/2)-(height/2));
             d3.select("svg").selectAll("rect").data(rect_lst).enter().append("g")
                 .attr("transform", function (d) { return d.transform })
@@ -58,14 +84,27 @@
                     .attr("y", yPosition)
                     .attr("width", width)
                     .attr("height", height)
-                    .attr("visibility", function(d){ return d['visibility']})
                     .attr("fill", "white")
                     .attr("stroke", function (d) { return d['stroke'] })
                     .attr("stroke-width", "1")
-                    .text(function(d){return d.layer})
-                    .on("mouseover", function(){
-                        console.log("rectMouseOver");
-                        init(nowAddedDeg, 10);})
+                   .text(function(d){return "deg : "+d['deg']+" / realDeg : "+d.realDeg+" / layer : "+d.layer+" / dummyDeg : "+d.dummyDeg});
+                
+                   
+            if(initFirst == true){
+                d3.select("svg").selectAll("g").on("mouseover", function(d){
+                    selectedDeg = d.realDeg;    
+                    init(nowAddedDeg, selectedDeg);
+                });
+            } 
+            else{
+                d3.select("svg").selectAll("g").
+                on("mouseout", function(d){
+                    d3.select("svg").selectAll("g").on("mouseover", function(d){
+                        selectedDeg = d.realDeg;    
+                        init(nowAddedDeg, selectedDeg);
+                    });
+                })
+            }
                 
             d3.selectAll("g").append("text")
                 .attr("x", xPosition)
@@ -76,22 +115,35 @@
                 .attr("transform", "rotate(-90)")
                 .attr("transform-origin", "center")
                 .attr("style", "transform-box : fill-box")
-                .text(function(d, i){ return "heyjude";});
+                .text(function(d, i){ return "heyjude";});        
         }
-        var nowAddedDeg = 0;
-        var selectedDeg = 90;
+
+
         function button(){
             var interval;
-            d3.select("button").on("mouseover", function(){interval = setInterval(function(){
-                nowAddedDeg+=1;
-                if(nowAddedDeg >= 200)
-                    nowAddedDeg-=230;
+            
+            d3.select("#event1").on("mouseover", function(){interval = setInterval(function(){
+                console.log("mouseover")
+                nowAddedDeg-=1;
+                if(nowAddedDeg < -20)
+                    nowAddedDeg += (200+30);
                 init(nowAddedDeg, selectedDeg);
             }, 30)})
-            d3.select("button").on("mouseout", function(){clearInterval(interval)});
-        }
+            d3.select("#event1").on("mouseout", function(){clearInterval(interval)});
+
+            d3.select("#event2").on("mouseover", function(){interval = setInterval(function(){
+                console.log("mouseover")
+                nowAddedDeg+=1;
+                if(nowAddedDeg > 200)
+                    nowAddedDeg -= (200+30);
+                init(nowAddedDeg, selectedDeg);
+            }, 30)})
+            d3.select("#event2").on("mouseout", function(){clearInterval(interval)});
+
+        };
         window.onload = function(){
-            init(0, selectedDeg);
+            init(0, 90);
+            initFirst = false;
             button();
         };
         window.onresize = function(){
@@ -104,8 +156,11 @@
 
 <body>
     <div>
-        <svg width="100vw" height="80vh" style="border:1px solid black">
+        <svg width="100vw" height="100vh" style="border:1px solid black">
+            
         </svg>
+        <div id = "event1" style = "width : 300px; height : 300px; position : absolute; left : 100px; top : 200px"></div>
+        <div id = "event2" style = "width : 300px; height : 300px; position : absolute; right : 100px; top : 200px"></div>
         <button>버튼</button>
     <div>
 <body>
