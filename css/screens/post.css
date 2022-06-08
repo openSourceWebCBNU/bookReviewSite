@@ -1,0 +1,130 @@
+.line{
+    width: 1000px;
+    height: 1px;
+    background-color: rgba(0,0,0, 0.3);
+}
+.post_instead_header{
+    width: 100vw;
+    height: 70px;
+}
+.post-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.post_head_container{
+    display: flex;
+    width: 1000px;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 20px;
+}
+.book_search_container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}
+
+.book_search_input{
+    background-color: var(--main-white);
+    border: none;
+    height: 35px;
+    width: 300px;
+    margin-top: 20px;
+    font-size: 15px;
+    border-bottom: 1px solid rgba(0,0,0, 0.3);
+}
+.book_search_input:focus{
+    border-bottom: 2px solid var(--main-yellow);
+}
+
+.book_search_btn{
+    background-color: var(--main-yellow);
+    border-radius: 16px;
+    height: 35px;
+    width: 80px;
+    border: none;
+    box-shadow: 0 0 3px var(--main-black);
+}
+.book_search_btn:hover{
+    cursor: pointer;
+    background-color: var(--main-gray);
+    color: white;
+}
+
+.empty{
+    width: 375px;
+    height: 10px;
+}
+
+.gerne_category{
+    background-color: var(--main-white);
+    width: 120px;
+    height: 30px;
+}
+.post_book_img{
+    width: 146px;
+    height: 204px;
+    object-fit: contain;
+}
+.post_book_img_container{
+    width: 152px;
+    height: 210px;
+    border: 3px solid var(--main-yellow);
+    box-shadow: 0 0 5px var(--main-gray);
+}
+
+
+.post-title{
+    width: 1000px;
+    height: 70px;
+    font-size: 20px;
+    border: none;
+    background-color: var(--main-white);
+}
+
+.main_text{
+    width: 1000px;
+    height: 150vh;
+    border: none;
+    background-color: var(--main-white);
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: 600;
+    font-family: 'YUniverse-B';
+}
+.main_text:hover{
+    border: none;
+}
+
+
+.submit_bar{
+    width: 100vw;
+    height: 8vh;
+    position: fixed;
+    top: 92vh;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    background-color: var(--main-gray);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.post_submit{
+    width: 15vh;
+    height: 5vh;
+    border-radius: 2.5vh;
+    background-color: var(--main-yellow);
+    color: var(--main-black);
+    font-family: 'YUniverse-B';
+    font-size: 3vh;
+    margin-right: 5vw;
+}
+.post_submit:hover{
+    cursor: pointer;
+    background-color: white;
+}

@@ -4,9 +4,67 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>글쓰기</title>
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
-    
+    <header class="header-post">
+        <div class="header-content-post">
+            <a href="/">
+                <div class="logo">
+                    <h1>독독스</h1>
+                </div>
+            </a>
+        </div>
+    </header>
+    <div class="post_instead_header"></div>
+    <main class="post-body">
+        <form class="post-form" action="">
+            <div class="post_head_container">
+                <div class="book_search_container">
+                    <select class="gerne_category">
+                        <option value="none">카테고리</option>
+                        <option value="popularity">인기순</option>
+                        <option value="development">자기계발</option>
+                        <option value="poem">시</option>
+                        <option value="essay">에세이</option>
+                        <option value="economy">경재</option>
+                        <option value="travel">여행</option>
+                        <option value="philosophy">철학</option>
+                        <option value="natural">자연과학</option>
+                        <option value="technology">기술과학</option>
+                        <option value="literature">문학</option>
+                        <option value="fantasy">판타지</option>
+                        <option value="mystery">추리</option>
+                        <option value="romance">로맨스</option>
+                        <option value="history">역사</option>
+                    </select>
+                    <div>
+                        <input class="book_search_input" type="text" placeholder="책 이름을 입력하세요">
+                        <button class="book_search_btn">불러오기</button>
+                    </div>
+                </div>
+                <div class="post_book_img_container">
+                    <img class="post_book_img" src="img/no_book.png" alt="">
+                </div>
+                <div class="empty"></div>
+            </div>
+            
+            <div class="line"></div>
+            
+            <input class="post-title" type="text" placeholder="제목을 입력하세요">
+
+            <div class="line"></div>
+
+            <textarea cols="40" rows="30" class="main_text"></textarea>
+
+            <div class="submit_bar">
+                <button class="post_submit" type="submit">완료</button>
+            </div>
+        </form>
+    </main>
+    <footer class=""></footer>
 </body>
+<script src="https://kit.fontawesome.com/4029a3b361.js" crossorigin="anonymous"></script>
+
 </html>
