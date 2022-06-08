@@ -1,0 +1,63 @@
+.header{
+    width: 100vw;
+    height: 80px;
+    border-bottom: 1px solid rgba(57, 62, 70, 0.3);
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--main-white);
+}
+.header-content{
+    width: 1300px;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.logo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    color: var(--main-black);
+}
+.logo h1{
+    font-family: 'ChusaLove';
+    font-size: 40px;
+}
+.logo h2{
+    font-family: 'Galmetgol';
+    font-size: 25px;
+}
+
+
+.side-menu{
+    width: 250px;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.search-btn{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 120px;
+    height: 45px;
+    font-size: 17px;
+    border-radius: 25px;
+    border: 1px solid var(--main-black);
+    font-family: 'YUniverse-B';
+    
+}
+.search-btn:hover{
+    cursor: pointer;
+}
+
+.user-page-btn{
+    color: var(--main-black);
+    margin-left: 20px;
+    font-size: 25px;
+}

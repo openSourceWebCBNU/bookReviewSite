@@ -18,13 +18,10 @@
 <body>
     <%
         String user_id = null;
-        if(session.getAttribute("user_id") != null) {
-            user_id = (String) session.getAttribute("user_id");
-        }
         if(user_id != null) { %>
             <script>
                 alert("이미 로그인 되어있습니다.");
-                location.href='main.jsp';
+                location.href='index.jsp';
             </script>
     <%
         }
@@ -50,7 +47,7 @@
             else {
                 session.setAttribute("user_id", user.getUser_id()); %>
                 <script>
-                    location.href = 'main.jsp';
+                    location.href = 'login.jsp';
                 </script>
     <%
             }

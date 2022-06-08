@@ -1,9 +1,5 @@
 <%--
-  Created by IntelliJ IDEA.
-  User: user
-  Date: 2022-06-01
-  Time: 오후 3:53
-  To change this template use File | Settings | File Templates.
+  로그인 수행
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="user.UserDAO" %>
@@ -20,13 +16,10 @@
 <body>
     <%
         String user_id = null;
-        if(session.getAttribute("user_id") != null) {
-            user_id = (String)session.getAttribute("user_id");
-        }
         if(user_id != null) { %>
             <script>
                 alert("이미 로그인 되어있습니다.");
-                location.href='main.jsp';
+                location.href='index.jsp';
             </script>
     <%
         }
@@ -36,7 +29,7 @@
         {
             session.setAttribute("user_id", user.getUser_id()); %>
             <script>
-                location.href='main.jsp';
+                location.href='index.jsp';
             </script>
     <%
         } else if(result == 0) { %>

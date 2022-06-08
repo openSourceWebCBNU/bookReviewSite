@@ -1,0 +1,162 @@
+@import "reset.css";
+@import "variable.css";
+
+/*comtonents*/
+@import "components/header.css";
+@import "components/goto.css";
+@import "components/searchbox.css";
+
+/*screens*/
+@import "screens/index.css";
+@import "screens/login.css";
+@import "screens/register.css";
+
+
+@font-face {
+    font-family: 'YUniverse-B';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_yuniverse@1.0/YUniverse-B.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Galmetgol';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/naverfont_04@1.0/Galmetgol.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'ChusaLove';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/ChusaLove.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+
+
+@keyframes btnClick{
+    0%{
+        transform: none;
+    }
+    15%{
+        transform: scale(0.5);
+        top: 40vh;
+    }
+    100%{
+        transform: scale(60);
+    }
+}
+
+@keyframes fadeIn1{
+    0% {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    10% {
+        transform: none;
+        opacity: 1;
+    }
+    60% {
+        transform: none;
+        opacity: 1;
+    }
+    70% {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+    80% {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+    90% {
+        transform: translateY(-30px);;
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(-30px);;
+        opacity: 0;
+    }
+}
+@keyframes fadeIn2{
+    0% {
+        transform: none;
+        opacity: 0;
+    }
+    10% {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    20% {
+        transform: none;
+        opacity: 1;
+    }
+    70% {
+        transform: none;
+        opacity: 1;
+    }
+    80% {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+    90% {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+}
+@keyframes fadeIn3{
+    0% {
+        transform: none;
+        opacity: 0;
+    }
+    10% {
+        transform: none;
+        opacity: 0;
+    }
+    20% {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    30% {
+        transform: none;
+        opacity: 1;
+    }
+    80% {
+        transform: none;
+        opacity: 1;
+    }
+    90% {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+}
+
+*{
+    box-sizing: border-box;
+}
+body{
+    background-color: var(--main-white);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+}
+.index-body{
+    width: 100vw;
+    height: 300vh;
+}
+.login-body{
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+}
+.register-body{
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+}
