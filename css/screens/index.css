@@ -1,0 +1,102 @@
+.instead_header{
+    width: 100vw;
+    height: 90px;
+}
+
+.index_main{
+    width: 1300px;
+    height: 250vh;
+    
+}
+
+.category{
+    width: 1300px;
+    height: 100px;
+    display: flex;
+   justify-content: space-around;
+   align-items: center;
+}
+.category-btn{
+    width: 55px;
+    height: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    font-family: 'YUniverse-B';
+    color: rgba(57, 62, 70, 0.7);
+}
+.select-border{
+    border-bottom: 3px solid var(--main-black);
+    color: var(--main-black);
+}
+.category-btn i{
+    font-size: 27px;
+    margin-bottom: 8px;
+}
+.category-btn:hover{
+    cursor: pointer;
+}
+
+
+.popularity{
+
+}
+.development{
+    
+}
+.poem{
+    
+}
+.essay{
+    
+}
+.economy{
+    
+}
+.travel{
+    
+}
+.philosophy{
+    
+}
+.natural-science{
+   
+}
+.technology-science{
+   
+}
+.literature{
+
+}
+.fantasy{
+
+}
+.mystery{
+
+}
+.romance{
+
+}
+.history{
+
+}
+
+
+.book_container{
+    width: 1300px;
+    height: 300px;
+    border: 1px solid black;
+    margin-bottom: 30px;
+}
+.book_recommend{
+    width: 1300px;
+    height: 1000px;
+    border: 1px solid black;
+}
+
+.index_footer{
+    width: 100vw;
+    height: 10px;
+}

@@ -1,0 +1,72 @@
+.register-header{
+    width: 100%;
+    height: 10px;
+}
+.register-main{
+    width: 1300px;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.register-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 460px;
+    height: 600px;
+    box-shadow: 0 0 5px var(--main-black);
+    border-radius: 25px;
+}
+
+.register-container h1{
+    font-family: 'YUniverse-B';
+    font-size: 35px;
+    margin-bottom: 30px;
+}
+
+.register-container input{
+    width: 230px;
+    height: 35px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--main-white);
+    box-shadow: 0 0 3px var(--main-black);
+    margin-bottom: 20px;
+    font-size: 16px;
+    padding-left: 10px;
+}
+.register-container input:focus{
+    box-shadow: 0 0 5px var(--main-yellow);
+}
+.regist-btn{
+    width: 230px;
+    height: 35px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--main-yellow);
+    color: var(--main-black);
+    box-shadow: 0 0 3px var(--main-black);
+    font-family: 'YUniverse-B';
+    font-size: 16px;
+}
+
+.login-link{
+    font-family: 'YUniverse-B';
+    font-size: 18px;
+    margin-top: 50px;
+    border-bottom: 1px solid var(--main-black);
+}
+.home-link-in-register{
+    font-family: 'YUniverse-B';
+    font-size: 18px;
+    margin-top: 20px;
+    border-bottom: 1px solid var(--main-black);
+}
+
+.register-footer{
+    width: 100%;
+    height: 10px;
+}
