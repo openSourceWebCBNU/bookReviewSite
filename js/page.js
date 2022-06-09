@@ -1,16 +1,31 @@
 const leftBtn = document.querySelector(".left_btn");
 const rightBtn = document.querySelector(".right_btn");
-const bookContainer = document.querySelector(".book_container");
+const bookList = document.querySelector(".book_list");
 
-const MaxPage = 10;
-var pageNum = 5;
-var nowPostion = 0;
+const MAXCOUNT = 3;
+var count = 0;
 
 leftBtn.addEventListener("click",function(){
-    nowPostion = bookContainer.offset().left;
-    bookContainer.offset({left: nowPostion - 320});
+    if(count==0){
+        count = MAXCOUNT;
+    }
+    else{
+        count = count - 1;
+    }
+    bookList.scrollTo({
+        left: 780 * count,
+        behavior: 'smooth'
+    });
 });
 rightBtn.addEventListener("click",function(){
-    nowPostion = bookContainer.offset().left; 
-    bookContainer.offset({left: nowPostion + 320});
+    if(count==MAXCOUNT){
+        count = 0;
+    }
+    else{
+        count = count + 1;
+    }
+    bookList.scrollTo({
+        left: 780 * count,
+        behavior: 'smooth'
+    });
 });
