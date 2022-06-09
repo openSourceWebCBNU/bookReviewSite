@@ -5,6 +5,9 @@
     box-sizing: border-box;
 }
 
+.body{
+    overflow: hidden;
+}
 #event1 {
     width: 200px;
     height: 300px;
@@ -22,6 +25,39 @@
     bottom: 0px;
     /* border: 1px solid black; */
 }
+
+
+#monthView{ /*월*/
+    position: absolute;
+    left: 50%;
+    top: 5%;
+    transform: translate(-50%, 0%);
+    color : #2c2c2c;
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#month{
+    font-family: 'Jua', sans-serif;
+    font-size: 80px;
+    padding-bottom: 50px;
+}
+#report_name, #book_name, #date{ /*제목*/
+    font-family: 'Hahmlet', serif;
+}
+
+#book_name{
+    font-size : 20px;
+    padding-bottom: 10px;
+}
+#report_name{
+    font-size : 30px;
+    padding-bottom: 5px;
+    font-style: italic;
+}
+
 
 #textView {
     width: 60%;
@@ -47,33 +83,22 @@
 #textView::-webkit-scrollbar{
     display : none;
 }
-#textView >div:first-child{ /*월*/
-    font-size: 80px;
-    color : #2c2c2c;
-    font-family: 'Jua', sans-serif;
-    margin-bottom: 40px;
-}
-#textView >div:nth-child(2){    
-    width : 100%;
-    display : flex;
-}
 
 
 
-#textView >div:nth-child(2)>div:nth-child(1){ /*이미지 div*/
+#textView>div:nth-child(1){ /*이미지 div*/
     width : 50%;
     display: flex;
     justify-content: center;
 }
-#textView >div:nth-child(2)>div:nth-child(2){ /*본문 div*/
+#textView>div:nth-child(2){ /*본문 div*/
     width : 50%;
     display: flex;
     align-items: center;
     flex-direction: column;
 }
 
-.title{ /*제목*/
-    font-family: 'Hahmlet', serif;
-    margin-bottom: 40px; 
-    font-size : 25px;
+
+.hidden{
+    visibility : hidden;
 }

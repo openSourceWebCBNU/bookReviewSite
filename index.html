@@ -21,7 +21,7 @@
         
 
         var width = 200;
-        var height = 120;
+        var height = 140;
         //최초 사각형의 x좌표와 y좌표
         var xPosition ;
         var yPosition;
@@ -44,9 +44,11 @@
             for(var i =0; i<24 ; i++){ //rect_lst에 splice기기 위해 초기화
                 book_report_lst.push({
                     "report_name" : "Name"+i,
-                    "book_name" : i+"버번번채책",
+                    "book_name" : i+"버번 번채 책",
                     "color" : color_lst[Math.floor(i/2)],
-                    "month" : i,
+                    "month" : Math.floor(i/3),
+                    "brNum" : i,
+                    "date" : "22/03/"+i
                 });
             }
         }
@@ -66,17 +68,30 @@
             xPosition = (parseInt(d3.select("svg").style("width")) / 2)-(width*2.2);
             yPosition = (parseInt(d3.select("svg").style("height"))-(height))+height;
     
-            console.log("selectedDeg : "+selectedDeg)
-            console.log("offset : "+offset)
-            console.log(rect_lst)
-            console.log(s_rect_lst)
-            if(rect_lst[Math.ceil((selectedDeg/degPlus))+1].month+"월" != d3.select(".month").text()){
-                d3.select(".month").text(rect_lst[Math.ceil((selectedDeg/degPlus))+1].month+"월")
+            // console.log("selectedDeg : "+selectedDeg)
+            // console.log("offset : "+offset)
+            // console.log(rect_lst)
+            // console.log(s_rect_lst)
+
+            //month 변화
+            if(rect_lst[Math.ceil((selectedDeg/degPlus))+1].month+"월" != d3.select("#month").text()){
+                d3.select("#month").text(rect_lst[Math.ceil((selectedDeg/degPlus))+1].month+"월")
             }
             if(click == true){
                 click = false;
             }
+            //book_name 변화
+            d3.select("#book_name").text("<"+rect_lst[Math.ceil((selectedDeg/degPlus))+1].book_name+">")
+
+            //report_name 변화
+            d3.select("#report_name").text(rect_lst[Math.ceil((selectedDeg/degPlus))+1].report_name)
+            
+            //date 변화
+            d3.select("#date").text(rect_lst[Math.ceil((selectedDeg/degPlus))+1].date)
+
+            //svg 초기화
             d3.select("svg").selectAll("*").remove();
+
             //사각형 생성 및 회전
             d3.select("svg").selectAll("rect").data(s_rect_lst).enter().append("g")
                 .attr("transform", function (d) { return d.transform })
@@ -93,26 +108,37 @@
             //텍스트 추가
             d3.selectAll("g").append("text")
                 .attr("x", xPosition)
-                .attr("y", yPosition+70)
-                .attr("fill", "black")
-                .attr("font-size", "20")
+                .attr("y", yPosition+80)
+                .attr("fill", "white")
+                .attr("font-size", "25")
                 .attr("font-family", "'DM Serif Display', serif")
-                .attr("font-weight", "bold")
                 .attr("transform", "rotate(-90)")
                 .attr("transform-origin", "center")
                 .attr("style", "transform-box : fill-box")
                 .text(function(d, i){ return s_rect_lst[i].report_name;});  
 
             d3.selectAll("g").append("text")
-                .attr("x", xPosition+140)
-                .attr("y", yPosition+65)
-                .attr("fill", "black")
-                .attr("font-size", "15")
+                .attr("x", xPosition+(width/2)+25)
+                .attr("y", yPosition+17)
+                .attr("fill", "white")
+                .attr("font-size", "12")
                 .attr("font-family", "'Jua', sans-serif")
+                .attr("transform", "rotate(180)")
+                .attr("transform-origin", "center")
+                .attr("style", "transform-box : fill-box")
+                .text(function(d, i){ return s_rect_lst[i].book_name;});        
+
+            d3.selectAll("g").append("text")
+                .attr("x", xPosition+165)
+                .attr("y", yPosition+133)
+                .attr("fill", "white")
+                .attr("font-size", "30")
+                .attr("font-family", "sans-serif")
+                .attr("font-weight", "bold")
                 .attr("transform", "rotate(-90)")
                 .attr("transform-origin", "center")
                 .attr("style", "transform-box : fill-box")
-                .text(function(d, i){ return s_rect_lst[i].book_name;});                  
+                .text(function(d, i){ return s_rect_lst[i].brNum;}); 
 
             //사각형 hover
             if(initFirst == true){
@@ -174,6 +200,8 @@
                     "report_name" : book_report_lst[i].report_name,
                     "book_name" : book_report_lst[i].book_name,
                     "month" : book_report_lst[i].month,
+                    "brNum" : book_report_lst[i].brNum,
+                    "date" : book_report_lst[i].date,
                 });
             }
         }
@@ -234,6 +262,8 @@
                         "report_name" : book_report_lst[0+offset].report_name,
                         "book_name" :book_report_lst[0+offset].book_name,
                         "month" : book_report_lst[0+offset].month,
+                        "brNum" : book_report_lst[0+offset].brNum,
+                        "date" : book_report_lst[0+offset].data,
                     })
                     return true;
                 }
@@ -247,7 +277,9 @@
                         "fill" : book_report_lst[rectNum-1+offset].color,
                         "report_name" : book_report_lst[rectNum-1+offset].report_name,
                         "book_name" :book_report_lst[rectNum-1+offset].book_name,
-                        "month" :book_report_lst[rectNum-1+offset].month
+                        "month" :book_report_lst[rectNum-1+offset].month,
+                        "brNum" : book_report_lst[rectNum-1+offset].brNum,
+                        "date" : book_report_lst[rectNum-1+offset].data,
                     })
                     return true;
                 }
@@ -286,22 +318,25 @@
     </script>
 </head>
 
-<body style = "margin : 0 0">
+<body class = body style = "margin : 0 0">
         <svg width="100%" height="100vh" style="border:1px solid black">
         </svg>
         <div id = "event1" ></div>
         <div id = "event2"></div>
-        <div id = "textView" >
-            <div class = "month">4월</div>
+        <div id = "monthView">
+            <div id = "month">4월</div>
+            <div id = "book_name"><납골당의 린린자자></div>
+            <div id = "report_name">좀비 세상에 떨어진 어린왕자</div>
+            <div id = "date">22/03/11</div>
+        </div>
+        <div class = "hidden" id = "textView" >
             <div>
+                <img src="img/XL.jpg" height = 400>
+            </div>
+            <div>
+                <div class = "report_name">납골당의 린린자자</div>
                 <div>
-                    <img src="img/XL.jpg" height = 400>
-                </div>
-                <div>
-                    <div class = "title">납골으의 린린자자</div>
-                    <div>
-                        있으며, 바이며, 설산에서 것이다. 꽃 자신과 것은 불러 청춘에서만 보라. 설레는 그들은 같지 방황하여도, 피다. 평화스러운 얼마나 심장의 보내는 그것을 바로 더운지라 보라. 되는 이것을 소리다.이것은 약동하다. 노래하며 그것은 싸인 만천하의 뼈 찬미를 같이, 가슴에 눈이 사막이다. 인생을 노년에게서 인간에 바로 바이며, 수 끓는다. 끝까지 청춘의 황금시대의 풀이 돋고, 있다. 천고에 산야에 자신과 못할 말이다.
-                    </div>
+                    있으며, 바이며, 설산에서 것이다. 꽃 자신과 것은 불러 청춘에서만 보라. 설레는 그들은 같지 방황하여도, 피다. 평화스러운 얼마나 심장의 보내는 그것을 바로 더운지라 보라. 되는 이것을 소리다.이것은 약동하다. 노래하며 그것은 싸인 만천하의 뼈 찬미를 같이, 가슴에 눈이 사막이다. 인생을 노년에게서 인간에 바로 바이며, 수 끓는다. 끝까지 청춘의 황금시대의 풀이 돋고, 있다. 천고에 산야에 자신과 못할 말이다.
                 </div>
             </div>
         </div>
