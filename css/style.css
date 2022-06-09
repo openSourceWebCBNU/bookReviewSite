@@ -12,6 +12,7 @@
 @import "/css/screens/register.css";
 @import "/css/screens/post.css";
 @import "/css/screens/search.css";
+@import "/css/screens/read.css";
 
 
 @font-face {
@@ -38,9 +39,17 @@
     0%{
         transform: none;
     }
-    15%{
-        transform: scale(0.5);
-        top: 40vh;
+    10%{
+        transform: scale(0.6);
+        top: -10vh;
+    }
+    30%{
+        transform: scale(1.4);
+        top: -10vh;
+    }
+    35%{
+        transform: scale(0.1);
+        top: -10vh;
     }
     100%{
         transform: scale(60);
