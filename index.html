@@ -18,6 +18,8 @@
         var s_rect_lst = [];
         var book_report_lst = [];
         var color_lst = ["#EB5353", "#F9D923", "#36AE7C", "#187498", "#7D1E6A", "#EEB0B0", "#FFE59D", "#BDE6F1", "#541690", "#FF4949", "#FF8D29", "#FFCD38"]
+        
+
         var width = 200;
         var height = 120;
         //최초 사각형의 x좌표와 y좌표
@@ -68,8 +70,8 @@
             console.log("offset : "+offset)
             console.log(rect_lst)
             console.log(s_rect_lst)
-            if(rect_lst[Math.floor((selectedDeg/degPlus))+1].month+"월" != d3.select(".month").text()){
-                d3.select(".month").text(rect_lst[Math.floor((selectedDeg/degPlus))+1].month+"월")
+            if(rect_lst[Math.ceil((selectedDeg/degPlus))+1].month+"월" != d3.select(".month").text()){
+                d3.select(".month").text(rect_lst[Math.ceil((selectedDeg/degPlus))+1].month+"월")
             }
             if(click == true){
                 click = false;
@@ -178,6 +180,7 @@
         function setRectListLayer(selectedDeg){
             var layerLeftNum;
             var layerRightNum;
+            
             layerLeftNum = Math.round(selectedDeg/degPlus)+1
             layerRightNum = rectNum-layerLeftNum-1;
 

@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Brush+Script&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Hahmlet:wght@500&display=swap');
+* {
+    box-sizing: border-box;
+}
+
+#event1 {
+    width: 200px;
+    height: 300px;
+    position: absolute;
+    left: 50px;
+    bottom: 0px;
+    /* border: 1px solid black; */
+}
+
+#event2 {
+    width: 200px;
+    height: 300px;
+    position: absolute;
+    right: 50px;
+    bottom: 0px;
+    /* border: 1px solid black; */
+}
+
+#textView {
+    width: 60%;
+    height: 45%;
+    padding : 20px 20px;
+    position: absolute;
+    left: 50%;
+    top: 2%;
+    transform: translate(-50%, 0%);
+    /* border: 1px solid black; */
+    overflow-y:hidden; 
+    overflow-x:hidden;
+    display : flex;
+    align-items: center;
+    flex-direction: column;
+    
+    box-shadow: inset 0px 0px 20px 3px rgb(77, 71, 71); 
+    overflow-y:scroll;
+    -ms-overflow-style : none;
+    scrollbar-width: none;
+}
+
+#textView::-webkit-scrollbar{
+    display : none;
+}
+#textView >div:first-child{ /*월*/
+    font-size: 80px;
+    color : #2c2c2c;
+    font-family: 'Jua', sans-serif;
+    margin-bottom: 40px;
+}
+#textView >div:nth-child(2){    
+    width : 100%;
+    display : flex;
+}
+
+
+
+#textView >div:nth-child(2)>div:nth-child(1){ /*이미지 div*/
+    width : 50%;
+    display: flex;
+    justify-content: center;
+}
+#textView >div:nth-child(2)>div:nth-child(2){ /*본문 div*/
+    width : 50%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.title{ /*제목*/
+    font-family: 'Hahmlet', serif;
+    margin-bottom: 40px; 
+    font-size : 25px;
+}
