@@ -81,3 +81,13 @@
     justify-content: space-between;
     align-items: center;
 }
+
+.logout_btn{
+    border: none;
+    background-color: var(--main-white);
+    font-size: 24px;
+    margin-left: 5px;
+}
+.logout_btn:hover{
+    cursor: pointer;
+}
