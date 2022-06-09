@@ -6,161 +6,300 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kdam+Thmor+Pro&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="style.css" />
     <script src="https://d3js.org/d3.v5.js"></script>
     <script>
         var initFirst = true;
         var rect_lst = [];
+        var s_rect_lst = [];
+        var book_report_lst = [];
+        var color_lst = ["#EB5353", "#F9D923", "#36AE7C", "#187498", "#7D1E6A", "#EEB0B0", "#FFE59D", "#BDE6F1", "#541690", "#FF4949", "#FF8D29", "#FFCD38"]
         var width = 200;
-        var height = 100;
-        
-        var rectNum = 23;
-        var degPlus = 10;
+        var height = 120;
+        //최초 사각형의 x좌표와 y좌표
+        var xPosition ;
+        var yPosition;
 
-        var nowAddedDeg = 0;
+        var degPlus = 15;
+        var rectNum = (180/degPlus+1)+2; //2는 양 방향 외곽, 1은 왼쪽 혹은 오른쪽 180도 부분을 포함한 개수
         var selectedDeg = 90;
-        for(var i =0; i<rectNum ; i++){
-                rect_lst.push({});
+        var offset = 0;
+        var click = false;
+        
+        
+        window.onload = function(){
+            init(90);
+        };
+        window.onresize = function(){
+            drawRect(selectedDeg);
+        };
+
+        function setBRLst(){
+            for(var i =0; i<24 ; i++){ //rect_lst에 splice기기 위해 초기화
+                book_report_lst.push({
+                    "report_name" : "Name"+i,
+                    "book_name" : i+"버번번채책",
+                    "color" : color_lst[Math.floor(i/2)],
+                    "month" : i,
+                });
             }
-        function init(nowAddedDeg, selectedDeg) {
-            if(selectedDeg > 200)
-                selectedDeg -= 360;
+        }
+        
+        function init(selectedDeg){
+            //layer 설정
+            setBRLst();
+            setRectList();
+            drawRect(selectedDeg);
+            setRotateSensor();
+        }
+
+        function drawRect(selectedDeg) {
+            setRectListLayer(selectedDeg);
+            setSRectList();
+
+            xPosition = (parseInt(d3.select("svg").style("width")) / 2)-(width*2.2);
+            yPosition = (parseInt(d3.select("svg").style("height"))-(height))+height;
+    
+            console.log("selectedDeg : "+selectedDeg)
+            console.log("offset : "+offset)
+            console.log(rect_lst)
+            console.log(s_rect_lst)
+            if(rect_lst[Math.floor((selectedDeg/degPlus))+1].month+"월" != d3.select(".month").text()){
+                d3.select(".month").text(rect_lst[Math.floor((selectedDeg/degPlus))+1].month+"월")
+            }
+            if(click == true){
+                click = false;
+            }
+            d3.select("svg").selectAll("*").remove();
+            //사각형 생성 및 회전
+            d3.select("svg").selectAll("rect").data(s_rect_lst).enter().append("g")
+                .attr("transform", function (d) { return d.transform })
+                .attr("transform-origin", ""+ (parseInt(d3.select("svg").style("width")) / 2)+" "+(parseInt(d3.select("svg").style("height"))+(height/2)))
+                .append("rect")
+                    .attr("x", xPosition)
+                    .attr("y", yPosition)
+                    .attr("width", width)
+                    .attr("height", height)
+                    .attr("fill", function(d){return d.fill;})
+                    .attr("stroke", function (d) { return d['stroke'] })
+                    .attr("stroke-width", "1")
+            
+            //텍스트 추가
+            d3.selectAll("g").append("text")
+                .attr("x", xPosition)
+                .attr("y", yPosition+70)
+                .attr("fill", "black")
+                .attr("font-size", "20")
+                .attr("font-family", "'DM Serif Display', serif")
+                .attr("font-weight", "bold")
+                .attr("transform", "rotate(-90)")
+                .attr("transform-origin", "center")
+                .attr("style", "transform-box : fill-box")
+                .text(function(d, i){ return s_rect_lst[i].report_name;});  
+
+            d3.selectAll("g").append("text")
+                .attr("x", xPosition+140)
+                .attr("y", yPosition+65)
+                .attr("fill", "black")
+                .attr("font-size", "15")
+                .attr("font-family", "'Jua', sans-serif")
+                .attr("transform", "rotate(-90)")
+                .attr("transform-origin", "center")
+                .attr("style", "transform-box : fill-box")
+                .text(function(d, i){ return s_rect_lst[i].book_name;});                  
+
+            //사각형 hover
+            if(initFirst == true){
+                d3.select("svg").selectAll("g")
+                .on("mouseover", function(d, i){ 
+                    drawRect(s_rect_lst[i].deg);
+                })
+                
+                initFirst = false;
+            } 
+            else{
+                d3.select("svg").selectAll("g")
+                .on("mouseout", function(d){
+                    d3.select("svg").selectAll("g")
+                    .on("mouseover", function(d, i){
+                        drawRect(s_rect_lst[i].deg);
+                    })
+                    .on("click", function(d, i){
+                        click = true;
+                        drawRect(s_rect_lst[i].deg);
+                    });;
+                })
+            }      
+        }
+
+
+        function second(plusNum){
+            //layer 설정
+            var isLstChange;
+            isLstChange = moveRectList(plusNum);
+            if(isLstChange === "out"){
+
+            }
+            else if(isLstChange == true){
+                drawRect(selectedDeg);
+            }
+            else{
+                setSRectList();
+
+                //사각형 생성 및 회전
+                d3.select("svg").selectAll("g")
+                    .attr("transform", function (d, i) { return s_rect_lst[i].transform})
+            }
+                
+        }
+
+        function setRectList(){
+            //rect_lst 초기화
+            rect_lst = [];
+            //layer 설정
+            for (var i =0; i<rectNum; i++) {
+                var deg = i*degPlus - (degPlus);
+                
+                rect_lst.push({
+                    "deg" : deg,
+                    "transform" : "rotate(" + deg + ")",
+                    "stroke" : "black",
+                    "fill" : book_report_lst[i].color,
+                    "report_name" : book_report_lst[i].report_name,
+                    "book_name" : book_report_lst[i].book_name,
+                    "month" : book_report_lst[i].month,
+                });
+            }
+        }
+        function setRectListLayer(selectedDeg){
             var layerLeftNum;
             var layerRightNum;
-            layerLeftNum = Math.ceil(selectedDeg/degPlus)+2
+            layerLeftNum = Math.round(selectedDeg/degPlus)+1
             layerRightNum = rectNum-layerLeftNum-1;
-            
-            for (var deg = nowAddedDeg; deg <= 180+(degPlus*4)+nowAddedDeg; deg += degPlus) {
-                var realDeg = deg;
-                var dummyDeg;
+
+            //layer 설정
+            for (var i =0; i<rectNum; i++) {
+                var deg = rect_lst[i].deg;
+                
                 var diff;
                 var layer;
-                
-                if(realDeg>180+(degPlus*2)){
-                    realDeg+=130;
-                }
-                
-                if(realDeg > 180+(degPlus*2))
-                    dummyDeg = realDeg-360;
-                else
-                    dummyDeg = realDeg;
-
-                if(dummyDeg>selectedDeg ){
-                    diff = Math.ceil(Math.abs((dummyDeg-selectedDeg)/degPlus));
+                    
+                if(deg>selectedDeg ){ //select 기준 우익
+                    diff = Math.ceil(Math.abs((deg-selectedDeg)/degPlus));
                     if(diff <= layerLeftNum) //이쪽은 우익, 즉 우익의 개수가 왼쪽의 lectNum보다 많아졌을 때(예를 들어 왼쪽이 두개고 오른쪽이 10개면 오른쪽 3개째부터) 
                         layer = (rectNum-1)-(diff*2)+1;
                     else{
                         layer = (rectNum-1)-(layerLeftNum*2)-(diff-layerLeftNum); 
                     }
                 }
-                else{
-                    diff = Math.floor(Math.abs((selectedDeg-dummyDeg)/degPlus));
+                else{ //select 기준 좌익
+                    diff = Math.floor(Math.abs((selectedDeg-deg)/degPlus));
                     if(diff <= layerRightNum)
                         layer = (rectNum-1)-(diff*2);
                     else{
                         layer = (rectNum-1)- //layer 최대값에서
                         (layerRightNum*2)-  //*2를 해서 갔던 레이어 만큼을 제하고
-                        (diff-layerRightNum); //거기부터 1씩(layerRight와 diff의 임만만큼) 줄인다
+                        (diff-layerRightNum); //거기부터 1씩(layerRight와 diff의 차이만큼) 줄인다
                     }
                 }
-                rect_lst.splice(layer, 1, {
-                    "transform": "rotate(" + realDeg + ")",
-                    "stroke": ((deg-nowAddedDeg) === 0) ? 'red' : 'blue',
-                    "layer" : layer,
-                    "deg" : deg,
-                    "realDeg" : realDeg,
-                    "dummyDeg" : dummyDeg
-                })
-                
+                rect_lst[i].layer = layer;
             }
-            console.log(rect_lst);
-            d3.select("svg").selectAll("*").remove();
-            var xPosition = (parseInt(d3.select("svg").style("width")) / 2)-(width*2);
-            var yPosition = ((parseInt(d3.select("svg").style("height"))/2)-(height/2));
-            d3.select("svg").selectAll("rect").data(rect_lst).enter().append("g")
-                .attr("transform", function (d) { return d.transform })
-                .attr("transform-origin", "center center")
-                .append("rect")
-                    .attr("x", xPosition)
-                    .attr("y", yPosition)
-                    .attr("width", width)
-                    .attr("height", height)
-                    .attr("fill", "white")
-                    .attr("stroke", function (d) { return d['stroke'] })
-                    .attr("stroke-width", "1")
-                   .text(function(d){return "deg : "+d['deg']+" / realDeg : "+d.realDeg+" / layer : "+d.layer+" / dummyDeg : "+d.dummyDeg});
-                
-                   
-            if(initFirst == true){
-                d3.select("svg").selectAll("g").on("mouseover", function(d){
-                    selectedDeg = d.realDeg;    
-                    init(nowAddedDeg, selectedDeg);
-                });
-            } 
-            else{
-                d3.select("svg").selectAll("g").
-                on("mouseout", function(d){
-                    d3.select("svg").selectAll("g").on("mouseover", function(d){
-                        selectedDeg = d.realDeg;    
-                        init(nowAddedDeg, selectedDeg);
-                    });
-                })
-            }
-                
-            d3.selectAll("g").append("text")
-                .attr("x", xPosition)
-                .attr("y", yPosition+50)
-                .attr("fill", "green")
-                .attr("font-size", "15")
-                .attr("font-family", "cursive")
-                .attr("transform", "rotate(-90)")
-                .attr("transform-origin", "center")
-                .attr("style", "transform-box : fill-box")
-                .text(function(d, i){ return "heyjude";});        
         }
-
-
-        function button(){
+        function setSRectList(){
+            s_rect_lst = [];
+            for(var i=0; i<rectNum; i++)
+                s_rect_lst.push({});
+                
+            for(var i=0; i<rectNum; i++){
+                s_rect_lst.splice(rect_lst[i].layer, 1, rect_lst[i])
+            }
+        }
+        function moveRectList(plusNum){
+            if((offset != 0 || plusNum < 0) && (offset+rectNum < book_report_lst.length || plusNum > 0)){
+                if(rect_lst[0].deg >= 0){
+                    offset--;
+                    rect_lst.pop();
+                    rect_lst.unshift({
+                        "deg" : -degPlus,
+                        "transform": "rotate("+ -degPlus +")",
+                        "stroke" : "black", 
+                        "fill" : book_report_lst[0+offset].color,
+                        "report_name" : book_report_lst[0+offset].report_name,
+                        "book_name" :book_report_lst[0+offset].book_name,
+                        "month" : book_report_lst[0+offset].month,
+                    })
+                    return true;
+                }
+                else if(rect_lst[rectNum-1].deg <= 180){
+                    offset++;
+                    rect_lst.shift();
+                    rect_lst.push({
+                        "deg" : 180 + degPlus,
+                        "transform": "rotate("+ (180 + degPlus) +")",
+                        "stroke" : "black",
+                        "fill" : book_report_lst[rectNum-1+offset].color,
+                        "report_name" : book_report_lst[rectNum-1+offset].report_name,
+                        "book_name" :book_report_lst[rectNum-1+offset].book_name,
+                        "month" :book_report_lst[rectNum-1+offset].month
+                    })
+                    return true;
+                }
+                else{
+                    for(i=0; i<rectNum; i++){
+                    rect_lst[i].deg += plusNum;
+                    rect_lst[i].transform = "rotate(" + rect_lst[i].deg + ")";
+                    }
+                    return false;
+                }
+            }
+            else
+                return "out";
+            
+        }
+        function setRotateSensor(){
             var interval;
             
-            d3.select("#event1").on("mouseover", function(){interval = setInterval(function(){
-                console.log("mouseover")
-                nowAddedDeg-=1;
-                if(nowAddedDeg < -20)
-                    nowAddedDeg += (200+30);
-                init(nowAddedDeg, selectedDeg);
-            }, 30)})
-            d3.select("#event1").on("mouseout", function(){clearInterval(interval)});
+            d3.select("#event1")
+            .on("mouseover", function(){interval = setInterval(function(){
+                second(1);
+            }, 10)})
+            .on("mouseout", function(){clearInterval(interval)});
 
-            d3.select("#event2").on("mouseover", function(){interval = setInterval(function(){
-                console.log("mouseover")
-                nowAddedDeg+=1;
-                if(nowAddedDeg > 200)
-                    nowAddedDeg -= (200+30);
-                init(nowAddedDeg, selectedDeg);
-            }, 30)})
-            d3.select("#event2").on("mouseout", function(){clearInterval(interval)});
+            d3.select("#event2")
+            .on("mouseover", function(){interval = setInterval(function(){
+                second(-1);
+            }, 10)})
+            .on("mouseout", function(){clearInterval(interval)});
+        };
 
-        };
-        window.onload = function(){
-            init(0, 90);
-            initFirst = false;
-            button();
-        };
-        window.onresize = function(){
-            init(nowAddedDeg, selectedDeg);
+        function getRandomColor() {
+            return "#" + Math.floor(Math.random() * 16777215).toString(16);
         }
+          
     </script>
-    <style>
-    </style>
 </head>
 
-<body>
-    <div>
-        <svg width="100vw" height="100vh" style="border:1px solid black">
-            
+<body style = "margin : 0 0">
+        <svg width="100%" height="100vh" style="border:1px solid black">
         </svg>
-        <div id = "event1" style = "width : 300px; height : 300px; position : absolute; left : 100px; top : 200px"></div>
-        <div id = "event2" style = "width : 300px; height : 300px; position : absolute; right : 100px; top : 200px"></div>
-        <button>버튼</button>
-    <div>
+        <div id = "event1" ></div>
+        <div id = "event2"></div>
+        <div id = "textView" >
+            <div class = "month">4월</div>
+            <div>
+                <div>
+                    <img src="img/XL.jpg" height = 400>
+                </div>
+                <div>
+                    <div class = "title">납골으의 린린자자</div>
+                    <div>
+                        있으며, 바이며, 설산에서 것이다. 꽃 자신과 것은 불러 청춘에서만 보라. 설레는 그들은 같지 방황하여도, 피다. 평화스러운 얼마나 심장의 보내는 그것을 바로 더운지라 보라. 되는 이것을 소리다.이것은 약동하다. 노래하며 그것은 싸인 만천하의 뼈 찬미를 같이, 가슴에 눈이 사막이다. 인생을 노년에게서 인간에 바로 바이며, 수 끓는다. 끝까지 청춘의 황금시대의 풀이 돋고, 있다. 천고에 산야에 자신과 못할 말이다.
+                    </div>
+                </div>
+            </div>
+        </div>
 <body>
