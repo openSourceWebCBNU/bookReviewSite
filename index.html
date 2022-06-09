@@ -28,16 +28,14 @@
 
         var degPlus = 15;
         var rectNum = (180/degPlus+1)+2; //2는 양 방향 외곽, 1은 왼쪽 혹은 오른쪽 180도 부분을 포함한 개수
-        var selectedDeg = 90;
         var offset = 0;
         var click = false;
         
         
         window.onload = function(){
-            init(90);
+            init(0, 7);
         };
         window.onresize = function(){
-            drawRect(selectedDeg);
         };
 
         function setBRLst(){
@@ -53,49 +51,51 @@
             }
         }
         
-        function init(selectedDeg){
+        function init(firstBrNum, selectedBrNum){
             //layer 설정
             setBRLst();
+            console.log(book_report_lst);
             setRectList();
-            drawRect(selectedDeg);
+            drawRect(firstBrNum, selectedBrNum);
             setRotateSensor();
         }
 
-        function drawRect(selectedDeg) {
-            setRectListLayer(selectedDeg);
+        function drawRect(firstBrNum, selectedBrNum) {
+            offset = firstBrNum;
+            setRectListLayer(selectedBrNum);
             setSRectList();
 
             xPosition = (parseInt(d3.select("svg").style("width")) / 2)-(width*2.2);
             yPosition = (parseInt(d3.select("svg").style("height"))-(height))+height;
-    
-            // console.log("selectedDeg : "+selectedDeg)
-            // console.log("offset : "+offset)
-            // console.log(rect_lst)
-            // console.log(s_rect_lst)
+            console.log("selectedBrNum : "+selectedBrNum)
+            console.log("offset : "+offset)
+            console.log(rect_lst)
+            console.log(s_rect_lst)
 
             //month 변화
-            if(rect_lst[Math.ceil((selectedDeg/degPlus))+1].month+"월" != d3.select("#month").text()){
-                d3.select("#month").text(rect_lst[Math.ceil((selectedDeg/degPlus))+1].month+"월")
+            if(rect_lst[selectedBrNum-offset].month+"월" != d3.select("#month").text()){
+                d3.select("#month").text(rect_lst[selectedBrNum-offset].month+"월")
             }
             if(click == true){
                 click = false;
             }
             //book_name 변화
-            d3.select("#book_name").text("<"+rect_lst[Math.ceil((selectedDeg/degPlus))+1].book_name+">")
+            d3.select("#book_name").text("<"+rect_lst[selectedBrNum-offset].book_name+">")
 
             //report_name 변화
-            d3.select("#report_name").text(rect_lst[Math.ceil((selectedDeg/degPlus))+1].report_name)
+            d3.select("#report_name").text(rect_lst[selectedBrNum-offset].report_name)
             
             //date 변화
-            d3.select("#date").text(rect_lst[Math.ceil((selectedDeg/degPlus))+1].date)
+            d3.select("#date").text(rect_lst[selectedBrNum-offset].date)
 
+            
             //svg 초기화
             d3.select("svg").selectAll("*").remove();
 
             //사각형 생성 및 회전
             d3.select("svg").selectAll("rect").data(s_rect_lst).enter().append("g")
                 .attr("transform", function (d) { return d.transform })
-                .attr("transform-origin", ""+ (parseInt(d3.select("svg").style("width")) / 2)+" "+(parseInt(d3.select("svg").style("height"))+(height/2)))
+                .attr(" -origin", ""+ (parseInt(d3.select("svg").style("width")) / 2)+" "+(parseInt(d3.select("svg").style("height"))+(height/2)))
                 .append("rect")
                     .attr("x", xPosition)
                     .attr("y", yPosition)
@@ -144,7 +144,7 @@
             if(initFirst == true){
                 d3.select("svg").selectAll("g")
                 .on("mouseover", function(d, i){ 
-                    drawRect(s_rect_lst[i].deg);
+                    drawRect(rect_lst[0].brNum, s_rect_lst[i].brNum);
                 })
                 
                 initFirst = false;
@@ -154,12 +154,12 @@
                 .on("mouseout", function(d){
                     d3.select("svg").selectAll("g")
                     .on("mouseover", function(d, i){
-                        drawRect(s_rect_lst[i].deg);
+                        drawRect(rect_lst[0].brNum, s_rect_lst[i].brNum);
                     })
-                    .on("click", function(d, i){
-                        click = true;
-                        drawRect(s_rect_lst[i].deg);
-                    });;
+                    // .on("click", function(d, i){
+                    //     click = true;
+                    //     drawRect(s_rect_lst[i].brNum);
+                    // });;
                 })
             }      
         }
@@ -173,7 +173,7 @@
 
             }
             else if(isLstChange == true){
-                drawRect(selectedDeg);
+                drawRect(rect_lst[0].brNum, 7+offset);
             }
             else{
                 setSRectList();
@@ -205,22 +205,25 @@
                 });
             }
         }
-        function setRectListLayer(selectedDeg){
+        function setRectListLayer(selectedBrNum){
             var layerLeftNum;
             var layerRightNum;
             
-            layerLeftNum = Math.round(selectedDeg/degPlus)+1
-            layerRightNum = rectNum-layerLeftNum-1;
-
+            layerRightNum = rectNum-selectedBrNum-1+offset;
+            layerLeftNum = rectNum-layerRightNum-1;
+            console.log("layerRightNum : ");
+            console.log(layerRightNum);
+            console.log("layerLeftNum : ");
+            console.log(layerLeftNum);
             //layer 설정
             for (var i =0; i<rectNum; i++) {
-                var deg = rect_lst[i].deg;
+                var iBrNum = rect_lst[i].brNum;
                 
                 var diff;
                 var layer;
                     
-                if(deg>selectedDeg ){ //select 기준 우익
-                    diff = Math.ceil(Math.abs((deg-selectedDeg)/degPlus));
+                if(iBrNum>selectedBrNum ){ //select 기준 우익
+                    diff = iBrNum-selectedBrNum;
                     if(diff <= layerLeftNum) //이쪽은 우익, 즉 우익의 개수가 왼쪽의 lectNum보다 많아졌을 때(예를 들어 왼쪽이 두개고 오른쪽이 10개면 오른쪽 3개째부터) 
                         layer = (rectNum-1)-(diff*2)+1;
                     else{
@@ -228,7 +231,7 @@
                     }
                 }
                 else{ //select 기준 좌익
-                    diff = Math.floor(Math.abs((selectedDeg-deg)/degPlus));
+                    diff = selectedBrNum-iBrNum;
                     if(diff <= layerRightNum)
                         layer = (rectNum-1)-(diff*2);
                     else{
@@ -263,7 +266,7 @@
                         "book_name" :book_report_lst[0+offset].book_name,
                         "month" : book_report_lst[0+offset].month,
                         "brNum" : book_report_lst[0+offset].brNum,
-                        "date" : book_report_lst[0+offset].data,
+                        "date" : book_report_lst[0+offset].date,
                     })
                     return true;
                 }
@@ -279,7 +282,7 @@
                         "book_name" :book_report_lst[rectNum-1+offset].book_name,
                         "month" :book_report_lst[rectNum-1+offset].month,
                         "brNum" : book_report_lst[rectNum-1+offset].brNum,
-                        "date" : book_report_lst[rectNum-1+offset].data,
+                        "date" : book_report_lst[rectNum-1+offset].date,
                     })
                     return true;
                 }
