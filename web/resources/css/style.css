@@ -10,6 +10,7 @@
 @import "screens/index.css";
 @import "screens/login.css";
 @import "screens/register.css";
+@import "screens/post.css";
 
 
 @font-face {
@@ -159,4 +160,7 @@ body{
     width: 100vw;
     height: 100vh;
     justify-content: center;
+}
+.post-body {
+    height: 200vh;
 }

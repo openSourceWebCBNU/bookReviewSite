@@ -14,7 +14,7 @@
 </head>
 <body>
     <%
-        String url = "http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx?ttbkey=ttbuipjo1232200001&itemIdType=ISBN&ItemId=8958285346&output=xml&Version=20131101&OptResult=ebookList,usedList,reviewList";
+        String url = "http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=ttbuipjo1232200001&Query=살인자&QueryType=Title&MaxResults=10&start=1&SearchTarget=Book&output=xml&Version=20131101";
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         dbf.setNamespaceAware(false);
         dbf.setValidating(false);
@@ -30,7 +30,7 @@
         NodeList author = doc.getDocumentElement().getElementsByTagName("author");
         NodeList publisher = doc.getDocumentElement().getElementsByTagName("publisher");
         NodeList pubDate = doc.getDocumentElement().getElementsByTagName("pubDate");
-        NodeList category = doc.getDocumentElement().getElementsByTagName("categoryName");
+        NodeList coverlink = doc.getDocumentElement().getElementsByTagName("cover");
 
         out.println("<table width=700 border=1 align=center>");
         out.println("<tr>");
@@ -39,18 +39,21 @@
         out.println("<5h width=50>저자</th>");
         out.println("<5h width=50>출판사</th>");
         out.println("<5h width=50>출판일자</th>");
-        out.println("<5h width=50>카테고리</th>");
+        out.println("<5h width=50>표지</th>");
         out.println("</tr>");
 
-        out.println("<tr>");
-        out.println("<td align=center></td>");
-        out.println("<td>"+title.item(0).getFirstChild().getTextContent()+"</td>");
-        out.println("<td>"+author.item(0).getFirstChild().getTextContent()+"</td>");
-        out.println("<td>"+publisher.item(0).getFirstChild().getTextContent()+"</td>");
-        out.println("<td>"+pubDate.item(0).getFirstChild().getTextContent()+"</td>");
-        out.println("<td>"+category.item(0).getFirstChild().getTextContent()+"</td>");
-        out.println("</tr>");
-        out.println("</table>");
+        for(int i = 0; i < 10; i++)
+        {
+            out.println("<tr>");
+            out.println("<td align=center></td>");
+            out.println("<td>"+title.item(i).getFirstChild().getTextContent()+"</td>");
+            out.println("<td>"+author.item(i).getFirstChild().getTextContent()+"</td>");
+            out.println("<td>"+publisher.item(i).getFirstChild().getTextContent()+"</td>");
+            out.println("<td>"+pubDate.item(i).getFirstChild().getTextContent()+"</td>");
+            out.println("<td>"+coverlink.item(i).getFirstChild().getTextContent()+"</td>");
+            out.println("</tr>");
+            out.println("</table>");
+        }
     %>
 </body>
 </html>

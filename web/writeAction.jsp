@@ -20,38 +20,40 @@
             user_id = (String)session.getAttribute("user_id");
         }
 
-        if(user_id == null) { %>
+        if(board.getPost_title() == null || board.getPost_text() == null) { %>
             <script>
-                alert("로그인이 필요합니다.");
-                location.href='login.jsp';
+                alert("입력이 안 된 사항이 있습니다.");
+                history.back();
             </script>
     <%
         }
         else {
-            if(board.getPost_title() == null || board.getPost_text() == null) { %>
+
+            request.setCharacterEncoding("UTF-8");
+            String book_title = request.getParameter("book_title");
+            String book_author = request.getParameter("book_author");
+            String isbn = request.getParameter("isbn");
+            String publisher = request.getParameter("publisher");
+            String pub_date = request.getParameter("pub_date");
+            String category = request.getParameter("category");
+            String cover = request.getParameter("cover");
+
+            BoardDAO boardDAO = new BoardDAO();
+            int result = boardDAO.write(board, user_id, isbn, book_title, book_author, publisher, pub_date, category, cover);
+
+            if(result == -1) { %>
                 <script>
-                    alert("입력이 안 된 사항이 있습니다.");
+                    alert("저장 실패");
                     history.back();
                 </script>
     <%
             }
-            else {
-                BoardDAO boardDAO = new BoardDAO();
-                int result = boardDAO.write(board.getPost_title(), user_id, board.getPost_text());
-
-                if(result == -1) { %>
-                    <script>
-                        alert("저장 실패");
-                        history.back();
-                    </script>
+            else { %>
+                <script>
+                    alert("독후감이 등록되었습니다.");
+                    location.href='index.jsp';
+                </script>
     <%
-                }
-                else { %>
-                    <script>
-                        location.href='main.jsp';
-                    </script>
-    <%
-                }
             }
         }
     %>

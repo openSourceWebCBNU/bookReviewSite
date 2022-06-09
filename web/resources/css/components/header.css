@@ -50,7 +50,7 @@
     border-radius: 25px;
     border: 1px solid var(--main-black);
     font-family: 'YUniverse-B';
-    
+
 }
 .search-btn:hover{
     cursor: pointer;
@@ -60,4 +60,23 @@
     color: var(--main-black);
     margin-left: 20px;
     font-size: 25px;
+}
+
+
+.header-post{
+    width: 100vw;
+    height: 60px;
+    border-bottom: 1px solid rgba(57, 62, 70, 0.3);
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--main-white);
+}
+.header-content-post{
+    width: 1300px;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }

@@ -36,7 +36,10 @@
       </div>
     </a>
 
-    <div></div>
+    <div>
+      <h3>글쓰기</h3>
+      <a href="write.jsp">클릭</a>
+    </div>
 
     <div class="side-menu">
       <div class="search-btn">
