@@ -8,8 +8,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>도서 다이어리</title>
-  <link rel="stylesheet" href="./resources/css/style.css">
+  <title>독서 다이어리</title>
+  <link rel="stylesheet" href="resources/css/style.css">
 </head>
 <body class="index-body">
 <div id="searchLayer" class="display-none">
@@ -21,9 +21,11 @@
       <input class="input" type="text" placeholder="도서명">
       <input class="input" type="text" placeholder="출판사">
       <input class="input" type="text" placeholder="저자">
-      <button class="btn" type="submit">
-        <i class="fa-solid fa-magnifying-glass"></i>
-      </button>
+      <a href="search.jsp">
+        <div class="btn">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+      </a>
     </div>
   </form>
 </div>
@@ -36,11 +38,14 @@
       </div>
     </a>
 
-    <div>
-      <h3>글쓰기</h3>
-      <a href="write.jsp">클릭</a>
-    </div>
+    <div></div>
 
+    <%
+        String user_id = null;
+        if(session.getAttribute("user_id") != null) {
+            user_id = (String)session.getAttribute("user_id");
+        }
+        if(user_id == null) { %>
     <div class="side-menu">
       <div class="search-btn">
         <i class="fa-solid fa-magnifying-glass"></i>
@@ -49,6 +54,13 @@
       <a href="login.jsp" class="user-page-btn">
         <i class="fa-solid fa-user"></i>
       </a>
+      <% }else { %>
+      <a class="logout_btn" href="logoutAction.jsp">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+      </a>
+      <%
+         }
+      %>
     </div>
   </div>
 </header>
@@ -115,19 +127,236 @@
     </div>
   </div>
   <div class="book_container">
-
+    <div class="left_btn">
+      <i class="fa-solid fa-chevron-left"></i>
+    </div>
+    <div class="book_list">
+      <div class="page1 page">
+        <a href="">
+          <div class="main_img_cover">
+            <h1 class="main_title">어른이 되어 읽은 어린왕자</h1>
+            <h2 class="main_content">" 네가 오후 네시에 온다면 나는 세시부터 행복해질거야 "</h2>
+          </div>
+        </a>
+        <img class="main_img" src="/resources/img/어린왕자_c.jpg" alt="">
+      </div>
+      <div class="page2 page">
+        <a href="">
+          <div class="main_img_cover">
+            <h1 class="main_title">벚꽃 아래에서 책을 읽어 보았다</h1>
+            <h2 class="main_content">집에서 읽는게 집중이 더 잘 된다. 다시는 안 해야지.</h2>
+          </div>
+        </a>
+        <img class="main_img" src="/resources/img/꽃_c.jpg" alt="">
+      </div>
+      <div class="page3 page">
+        <a href="">
+          <div class="main_img_cover">
+            <h1 class="main_title">일본판 막장 드라마</h1>
+            <h2 class="main_content">절친이 죽고 절친의 여자친구와 사귀었는데 그 여자친구도 자살했다.</h2>
+          </div>
+        </a>
+        <img class="main_img" src="/resources/img/노르웨이_c.jpg" alt="">
+      </div>
+      <div class="page4 page">
+        <a href="">
+          <div class="main_img_cover">
+            <h1 class="main_title">그 시절 우리가 사랑했던 앤</h1>
+            <h2 class="main_content"></h2>
+          </div>
+        </a>
+        <img class="main_img" src="/resources/img/빨강_c.jpg" alt="">
+      </div>
+      <div class="page5 page">
+        <a href="">
+          <div class="main_img_cover">
+            <h1 class="main_title">대통령은 눈물을 마시는 새인가?</h1>
+            <h2 class="main_content"></h2>
+          </div>
+        </a>
+        <img class="main_img" src="/resources/img/눈물을_c.jpg" alt="">
+      </div>
+      <div class="page6 page">
+        <a href="">
+          <div class="main_img_cover">
+            <h1 class="main_title">겨울이 오고 있다</h1>
+            <h2 class="main_content"></h2>
+          </div>
+        </a>
+        <img class="main_img" src="/resources/img/왕좌의_c.jpg" alt="">
+      </div>
+      <div class="page7 page">
+        <a href="">
+          <div class="main_img_cover">
+            <h1 class="main_title">게이가 되버린 할아버지에 관하여</h1>
+            <h2 class="main_content">조수현이 지은 독후감 제목</h2>
+          </div>
+        </a>
+        <img class="main_img" src="/resources/img/해리포터_c.jpg" alt="">
+      </div>
+      <div class="page8 page">
+        <a href="">
+          <div class="main_img_cover">
+            <h1 class="main_title">한계를 극복하는 자들</h1>
+            <h2 class="main_content"></h2>
+          </div>
+        </a>
+        <img class="main_img" src="/resources/img/피를_c.jpg" alt="">
+      </div>
+      <div class="page9 page">
+        <a href="">
+          <div class="main_img_cover">
+            <h1 class="main_title">우리에게 던지는 질문</h1>
+            <h2 class="main_content"></h2>
+          </div>
+        </a>
+        <img class="main_img" src="/resources/img/숨_c.png" alt="">
+      </div>
+      <div class="page10 page">
+        <a href="">
+          <div class="main_img_cover">
+            <h1 class="main_title">x됐다</h1>
+            <h2 class="main_content">이지원이 지은 독후감 제목</h2>
+          </div>
+        </a>
+        <img class="main_img" src="/resources/img/마션_c.jpg" alt="">
+      </div>
+    </div>
+    <div class="right_btn">
+      <i class="fa-solid fa-chevron-right"></i>
+    </div>
   </div>
-  <div class="book_recommend"></div>
+  <div class="book_recommend">
+    <h1 class="best_seller">Best Seller</h1>
+    <div class="best_seller_container">
+      <div class="one best_seller_book_container">
+        <a href="">
+          <img class="best_seller_img" src="/resources/img/킬러_c.jpg" alt="">
+        </a>
+        <div class="book_description">
+          <h1 class="best_seller_title">킬러 안데르스와 그의 친구 둘</h1>
+          <h2 class="best_seller_info">엉뚱한 살인범, 떠돌이 목사, 싸구려 호텔 리셉셔니스트가 만나 펼치는 대활약상.</h2>
+        </div>
+      </div>
+      <div class="two best_seller_book_container">
+        <a href="">
+          <img class="best_seller_img" src="/resources/img/마션_c.jpg" alt="">
+        </a>
+        <div class="book_description">
+          <h1 class="best_seller_title">마션</h1>
+          <h2 class="best_seller_info">어느 괴짜 과학자의 화성판 어드밴처 생존기.</h2>
+        </div>
+      </div>
+      <div class="three best_seller_book_container">
+        <a href="">
+          <img class="best_seller_img" src="/resources/img/나미야_c.jpg" alt="">
+        </a>
+        <div class="book_description">
+          <h1 class="best_seller_title">나미야 잡화점의 기적</h1>
+          <h2 class="best_seller_info">기적과 감동을 추리한다!</h2>
+        </div>
+      </div>
+      <div class="four best_seller_book_container">
+        <a href="">
+          <img class="best_seller_img" src="/resources/img/언어의_c.jpg" alt="">
+        </a>
+        <div class="book_description">
+          <h1 class="best_seller_title">언어의 온도</h1>
+          <h2 class="best_seller_info">말과 글에는 나름의 따뜻함과 차가움이 있다.</h2>
+        </div>
+      </div>
+
+
+      <div class="five best_seller_book_container">
+        <a href="">
+          <img class="best_seller_img" src="/resources/img/숨_c.png" alt="">
+        </a>
+        <div class="book_description">
+          <h1 class="best_seller_title">숨 Exhalation</h1>
+          <h2 class="best_seller_info">SF의 거장 테드 창의 단편 SF모음집.</h2>
+        </div>
+      </div>
+      <div class="six best_seller_book_container">
+        <a href="">
+          <img class="best_seller_img" src="/resources/img/어린왕자_c.jpg" alt="">
+        </a>
+        <div class="book_description">
+          <h1 class="best_seller_title">어린왕자</h1>
+          <h2 class="best_seller_info">프랑스의 비행사이자 작가인 앙투안 드 생텍쥐페리가 1943년 발표한 소설이다.</h2>
+        </div>
+      </div>
+      <div class="seven best_seller_book_container">
+        <a href="">
+          <img class="best_seller_img" src="/resources/img/왕좌의_c.jpg" alt="">
+        </a>
+        <div class="book_description">
+          <h1 class="best_seller_title">왕좌의 게임1</h1>
+          <h2 class="best_seller_info">미국의 소설가이자 극작가인 조지 R. R. 마틴(George R. R. Martin)이 쓴 서사 판타지 소설 시리즈.</h2>
+        </div>
+      </div>
+      <div class="eight best_seller_book_container">
+        <a href="">
+          <img class="best_seller_img" src="/resources/img/나는_c.jpg" alt="">
+        </a>
+        <div class="book_description">
+          <h1 class="best_seller_title">나는 고양이로소이다</h1>
+          <h2 class="best_seller_info">영어 교사인 집에서 길러지고 있는 고양이의 시점에서, 주인인 구샤미 선생의 일가와, 구샤미의 집에 모이는 그의 친구들 및 문하생들의 인간 만상을 풍자적으로 묘사한 작품.</h2>
+        </div>
+      </div>
+
+
+      <div class="nine best_seller_book_container">
+        <a href="">
+          <img class="best_seller_img" src="/resources/img/노르웨이_c.jpg" alt="">
+        </a>
+        <div class="book_description">
+          <h1 class="best_seller_title">노르웨이의 숲</h1>
+          <h2 class="best_seller_info">1987년 발표된 후 세계적인 '하루키 붐'을 일으키며 저자의 문학적 성과를 널리 알린 현대 일본 문학의 대표작이다.</h2>
+        </div>
+      </div>
+      <div class="ten best_seller_book_container">
+        <a href="">
+          <img class="best_seller_img" src="/resources/img/눈물을_c.jpg" alt="">
+        </a>
+        <div class="book_description">
+          <h1 class="best_seller_title">눈물을 마시는 새 1</h1>
+          <h2 class="best_seller_info">인간, 레콘, 나가, 도깨비라는 네 종족이 살아가는 가상세계를 배경으로한 한국형 판타지.</h2>
+        </div>
+      </div>
+      <div class="eleven best_seller_book_container">
+        <a href="">
+          <img class="best_seller_img" src="/resources/img/피를_c.jpg" alt="">
+        </a>
+        <div class="book_description">
+          <h1 class="best_seller_title">피를 마시는 새 1</h1>
+          <h2 class="best_seller_info">한국 판타지의 거장 이영도의 '눈물을 마시는 새' 후속작.</h2>
+        </div>
+      </div>
+      <div class="twelve best_seller_book_container">
+        <a href="">
+          <img class="best_seller_img" src="/resources/img/해리포터_c.jpg" alt="">
+        </a>
+        <div class="book_description">
+          <h1 class="best_seller_title">해리포터</h1>
+          <h2 class="best_seller_info">전 세계인에게 사랑받는 대표 판타지.</h2>
+        </div>
+      </div>
+    </div>
+  </div>
 </main>
 
 <footer class="index_footer"></footer>
 
 <a class="goto_btn" href="javascript:linkDelay()">
-  <div ></div>
+  <div class="my_reviews_btn">
+    <h1 class="my_reviews_h1">내 서재</h1>
+    <i class="fa-solid fa-book-open"></i>
+  </div>
 </a>
 </body>
 <script src="https://kit.fontawesome.com/4029a3b361.js" crossorigin="anonymous"></script>
-<script src="/resources/js/index.js"></script>
-<script src="/resources/js/button.js"></script>
-<script src="/resources/js/searchLayer.js"></script>
+<script src="resources/js/index.js"></script>
+<script src="resources/js/button.js"></script>
+<script src="resources/js/searchLayer.js"></script>
+<script src="resources/js/page.js"></script>
 </html>

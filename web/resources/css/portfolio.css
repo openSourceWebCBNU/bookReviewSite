@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Brush+Script&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Hahmlet:wght@500&display=swap');
+* {
+    box-sizing: border-box;
+}
+
+.body{
+    overflow: hidden;
+    background-color: var(--main-white);
+}
+#event1 {
+    width: 200px;
+    height: 300px;
+    position: absolute;
+    left: 50px;
+    bottom: 0px;
+    /* border: 1px solid black; */
+}
+
+#event2 {
+    width: 200px;
+    height: 300px;
+    position: absolute;
+    right: 50px;
+    bottom: 0px;
+    /* border: 1px solid black; */
+}
+
+
+#monthView{ /*월*/
+    position: absolute;
+    left: 50%;
+    top: 5%;
+    transform: translate(-50%, 0%);
+    color : #2c2c2c;
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#month{
+    font-family: 'Jua', sans-serif;
+    font-size: 80px;
+    padding-bottom: 50px;
+}
+#report_name, #book_name, #date{ /*제목*/
+    font-family: 'Hahmlet', serif;
+}
+
+#book_name{
+    font-size : 20px;
+    padding-bottom: 10px;
+}
+#report_name{
+    font-size : 30px;
+    padding-bottom: 5px;
+    font-style: italic;
+}
+
+
+#textView {
+    width: 60%;
+    height: 45%;
+    padding : 20px 20px;
+    position: absolute;
+    left: 50%;
+    top: 2%;
+    transform: translate(-50%, 0%);
+    /* border: 1px solid black; */
+    overflow-y:hidden;
+    overflow-x:hidden;
+    display : flex;
+    align-items: center;
+    flex-direction: column;
+
+    box-shadow: inset 0px 0px 20px 3px rgb(77, 71, 71);
+    overflow-y:scroll;
+    -ms-overflow-style : none;
+    scrollbar-width: none;
+}
+
+#textView::-webkit-scrollbar{
+    display : none;
+}
+
+
+
+#textView>div:nth-child(1){ /*이미지 div*/
+    width : 50%;
+    display: flex;
+    justify-content: center;
+}
+#textView>div:nth-child(2){ /*본문 div*/
+    width : 50%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+.hidden{
+    visibility : hidden;
+}
+
+/*a{*/
+/*    position: absolute;*/
+/*    right: 5%;*/
+/*    top: 2%;*/
+/*}*/
+
+.to_write{
+    position: absolute;
+    right: 5%;
+    top: 2%;
+    border: none;
+    width: 140px;
+    height: 40px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 3px var(--main-gray);
+    font-size: 20px;
+    font-family: 'SuncheonB';
+    background-color: var(--main-yellow);
+    color: var(--main-black);
+}
+.to_write:hover{
+    cursor: pointer;
+    background-color: var(--main-black);
+    color: var(--main-white);
+}

@@ -128,3 +128,9 @@
     cursor: pointer;
     background-color: white;
 }
+
+.search-form{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

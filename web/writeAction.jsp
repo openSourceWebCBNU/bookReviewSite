@@ -30,7 +30,7 @@
         else {
 
             request.setCharacterEncoding("UTF-8");
-            String book_title = request.getParameter("book_title");
+            String book_title = request.getParameter("search");
             String book_author = request.getParameter("book_author");
             String isbn = request.getParameter("isbn");
             String publisher = request.getParameter("publisher");

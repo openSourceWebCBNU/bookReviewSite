@@ -1,0 +1,99 @@
+.read_main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.read_post_title_container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1000px;
+    height: 80px;
+}
+.read_post_title{
+    font-family: 'YUniverse-B';
+    font-size: 45px;
+    color: var(--main-black);
+}
+.read_post_info_container{
+    width: 1000px;
+    height: 40px;
+    background-color: rgba(255, 211, 105, 0.2);
+    border-top: 1px solid rgba(0,0,0, 0.3);
+    border-bottom: 1px solid rgba(0,0,0, 0.3);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.like_container{
+    display: flex;
+}
+.sub_info{
+    font-family: 'YUniverse-B';
+    font-size: 18px;
+    color: var(--main-gray);
+}
+
+.read_text{
+    padding: 20px;
+    font-size: 20px;
+    width: 1000px;
+    height: 300px;
+}
+
+.read_book_info_container{
+    background-color: rgba(255, 211, 105, 0.2);
+    border-top: 1px solid rgba(0,0,0, 0.3);
+    border-bottom: 1px solid rgba(0,0,0, 0.3);
+    width: 1000px;
+    height: 170px;
+    padding-left: 10px;
+    display: flex;
+    align-items: center;
+}
+
+
+.read_book_summary_container{
+    width: 800px;
+    height: 100%;
+    padding: 10px 0 10px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+.read_book_img{
+    width: 112px;
+    height: 153px;
+    border: 2px solid var(--main-gray);
+}
+
+.read_book_title{
+    font-family: 'YUniverse-B';
+    font-size: 20px;
+}
+.read_one_line{
+    font-family: 'YUniverse-B';
+    font-size: 20px;
+}
+.read_like_btn{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: var(--main-white);
+    width: 80px;
+    height: 35px;
+    border-radius: 17px;
+    box-shadow: 0 0 3px var(--main-black);
+    font-family: 'YUniverse-B';
+
+}
+.read_like_btn:hover{
+    cursor: pointer;
+}
+.like{
+    background-color: var(--main-yellow);
+}

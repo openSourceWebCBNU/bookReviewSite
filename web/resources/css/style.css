@@ -11,6 +11,9 @@
 @import "screens/login.css";
 @import "screens/register.css";
 @import "screens/post.css";
+@import "screens/search.css";
+@import "screens/read.css";
+@import "portfolio.css";
 
 
 @font-face {
@@ -31,15 +34,29 @@
     font-weight: 400;
     font-style: normal;
 }
+@font-face {
+    font-family: 'SuncheonB';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/SuncheonB.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 
 
 @keyframes btnClick{
     0%{
         transform: none;
     }
-    15%{
-        transform: scale(0.5);
-        top: 40vh;
+    10%{
+        transform: scale(0.6);
+        top: -10vh;
+    }
+    30%{
+        transform: scale(1.4);
+        top: -10vh;
+    }
+    35%{
+        transform: scale(0.1);
+        top: -10vh;
     }
     100%{
         transform: scale(60);
@@ -161,6 +178,10 @@ body{
     height: 100vh;
     justify-content: center;
 }
-.post-body {
+.post-body{
     height: 200vh;
+}
+.search-body{
+    width: 100vw;
+    height: 300vh;
 }

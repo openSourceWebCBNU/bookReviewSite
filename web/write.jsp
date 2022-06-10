@@ -42,9 +42,17 @@
 </header>
 <div class="post_instead_header"></div>
 <main class="post-body">
+    <%
+        request.setCharacterEncoding("UTF-8");
+        String search = request.getParameter("search");
+
+        if(search == null) {
+            search = "";
+        }
+    %>
     <form class="search-form" name=search method="get" action="write.jsp">
-        <div>
-            <input class="book_search_input" type="text" name="search" placeholder="책 이름을 입력하세요">
+        <div style="width: 410px;">
+            <input class="book_search_input" type="text" name="search" value="<%=search%>" placeholder="책 이름을 입력하세요">
             <button class="book_search_btn" type="submit" onclick="delete_space()">불러오기</button>
             <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
             <script type="text/javascript">
@@ -54,32 +62,38 @@
                     $('.book_search_input').val(a);
                 }
             </script>
+            <%
+                request.setCharacterEncoding("UTF-8");
+                String SearchWord = request.getParameter("search");
+
+                String url = "http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=ttbuipjo1232200001&Query="+SearchWord+"&QueryType=Title&Cover=Big&MaxResults=10&start=1&SearchTarget=Book&Sort=SalesPoint&output=xml&Version=20131101";
+                DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+                dbf.setNamespaceAware(false);
+                dbf.setValidating(false);
+                DocumentBuilder b = dbf.newDocumentBuilder();
+
+                URLConnection urlConnection = new URL(url).openConnection();
+                urlConnection.addRequestProperty("Accept", "applicaton/xml");
+
+                Document doc = b.parse(urlConnection.getInputStream());
+                doc.getDocumentElement().normalize();
+
+                NodeList title = doc.getDocumentElement().getElementsByTagName("title");
+                NodeList author = doc.getDocumentElement().getElementsByTagName("author");
+                NodeList isbn = doc.getDocumentElement().getElementsByTagName("isbn13");
+                NodeList publisher = doc.getDocumentElement().getElementsByTagName("publisher");
+                NodeList pubDate = doc.getDocumentElement().getElementsByTagName("pubDate");
+                NodeList cover = doc.getDocumentElement().getElementsByTagName("cover");
+            %>
         </div>
+        <div class="post_book_img_container">
+            <img class="post_book_img" src="<%=cover.item(1).getFirstChild().getTextContent()%>" alt="">
+        </div>
+        <div style="width: 410px; height: 10px;"></div>
     </form>
 
-    <%
-        request.setCharacterEncoding("UTF-8");
-        String SearchWord = request.getParameter("search");
 
-        String url = "http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=ttbuipjo1232200001&Query="+SearchWord+"&QueryType=Title&Cover=Big&MaxResults=10&start=1&SearchTarget=Book&Sort=SalesPoint&output=xml&Version=20131101";
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        dbf.setNamespaceAware(false);
-        dbf.setValidating(false);
-        DocumentBuilder b = dbf.newDocumentBuilder();
 
-        URLConnection urlConnection = new URL(url).openConnection();
-        urlConnection.addRequestProperty("Accept", "applicaton/xml");
-
-        Document doc = b.parse(urlConnection.getInputStream());
-        doc.getDocumentElement().normalize();
-
-        NodeList title = doc.getDocumentElement().getElementsByTagName("title");
-        NodeList author = doc.getDocumentElement().getElementsByTagName("author");
-        NodeList isbn = doc.getDocumentElement().getElementsByTagName("isbn13");
-        NodeList publisher = doc.getDocumentElement().getElementsByTagName("publisher");
-        NodeList pubDate = doc.getDocumentElement().getElementsByTagName("pubDate");
-        NodeList cover = doc.getDocumentElement().getElementsByTagName("cover");
-    %>
 
     <form method="get" class="post-form" action="writeAction.jsp">
         <div class="post_head_container">
@@ -102,9 +116,9 @@
                     <option value="history">역사</option>
                 </select>
             </div>
-            <div class="post_book_img_container">
-                <img class="post_book_img" src="<%=cover.item(1).getFirstChild().getTextContent()%>" alt="">
-            </div>
+<%--            <div class="post_book_img_container">--%>
+<%--                <img class="post_book_img" src="<%=cover.item(1).getFirstChild().getTextContent()%>" alt="">--%>
+<%--            </div>--%>
             <div class="empty"></div>
         </div>
 
@@ -115,7 +129,7 @@
         <div class="line"></div>
 
         <textarea cols="40" rows="30" name="post_text" class="main_text"></textarea>
-        <input type="hidden" name="book_title" value="<%=title.item(2).getFirstChild().getTextContent()%>">
+        <input type="hidden" name="search" value="<%=search%>">
         <input type="hidden" name="book_author" value="<%=author.item(1).getFirstChild().getTextContent()%>">
         <input type="hidden" name="isbn" value="<%=isbn.item(1).getFirstChild().getTextContent()%>">
         <input type="hidden" name="publisher" value="<%=publisher.item(1).getFirstChild().getTextContent()%>">

@@ -1,6 +1,6 @@
 .goto_btn{
-    width: 70px;
-    height: 70px;
+    width: 90px;
+    height: 90px;
     border-radius: 50%;
     border: 1px solid black;
     position: fixed;
@@ -9,8 +9,31 @@
     right: 0;
     bottom: 0;
     margin: auto;
+    background-color: var(--main-gray);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 3px var(--main-black);
+    z-index: 20;
+    color: var(--main-yellow);
 }
 
 .click_animation{
     animation: btnClick 2s linear forwards;
+}
+.my_reviews_btn{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.my_reviews_h1{
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--main-yellow);
+    margin-bottom: 8px
+}
+
+.color_gray{
+    color: var(--main-gray);
 }

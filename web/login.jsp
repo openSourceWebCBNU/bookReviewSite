@@ -33,7 +33,7 @@
                 회원가입
             </div>
         </a>
-        <a class="home-link" href="/">홈으로 돌아가기</a>
+        <a class="home-link" href="index.jsp">홈으로 돌아가기</a>
     </form>
 </main>
 <footer class="login-footer"></footer>
