@@ -54,6 +54,28 @@ public class BoardDAO {
         return null;
     }
 
+    public ArrayList<Board> getPortfolio(String user_id) {
+        String SQL = "SELECT * FROM post WHERE user_id= ? ORDER BY post_id DESC LIMIT 24";
+        ArrayList<Board> list = new ArrayList<Board>();
+        try {
+            pstmt = conn.prepareStatement(SQL);
+            pstmt.setString(1, user_id);
+            rs = pstmt.executeQuery();
+
+            while(rs.next()) {
+                Board board = new Board();
+                board.setPost_id(rs.getInt(1));
+                board.setPost_title(rs.getString(2));
+                board.setPost_date(rs.getString(4));
+                board.setBook_title(rs.getString(7));
+                list.add(board);
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
     public int getNext() {
         String SQL = "SELECT post_id FROM post ORDER BY post_id desc";
         try {
@@ -136,6 +158,18 @@ public class BoardDAO {
 
     public int delete(Integer post_id) {
         String SQL = "UPDATE post SET avaliable=0 WHERE post_id = ?";
+        try {
+            pstmt = conn.prepareStatement(SQL);
+            pstmt.setInt(1, post_id);
+            return pstmt.executeUpdate();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public int like(Integer post_id) {
+        String SQL = "UPDATE post SET good = good + 1 WHERE post_id = ?";
         try {
             pstmt = conn.prepareStatement(SQL);
             pstmt.setInt(1, post_id);

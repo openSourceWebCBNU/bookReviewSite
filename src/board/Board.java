@@ -13,7 +13,7 @@ public class Board {
     private String pub_date;
     private String category;
     private String cover;
-    private int like;
+    private int good;
     private int avaliable;
 
     public int getPost_id() {
@@ -100,9 +100,9 @@ public class Board {
         this.cover = cover;
     }
 
-    public int getLike() { return like; }
+    public int getLike() { return good; }
 
-    public void setLike(Integer like) { this.like = like; }
+    public void setLike(Integer like) { this.good = like; }
 
     public int getAvaliable() { return avaliable; }
 
